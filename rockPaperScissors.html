@@ -4,72 +4,152 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Game</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+	<style>
+
+		* {
+			margin: 0;
+			padding: 0;
+			font-family: roboto;
+		}
+
+		.header h1 {
+			text-align: center;
+			padding: 25px;
+		}
+
+		.header {
+			height: 100px;
+			width: 100%;
+			background-color: beige;
+		}
+
+		.score-div {
+			display: inline-flex;
+			width: 100%;
+			justify-content: space-between;
+		}
+
+		.score-div h2 {
+			margin: 50px 80px 0px 80px;
+		}
+
+		.buttons {
+			height: 200px;
+			width: 100%;
+			display: grid;
+			grid-template-rows: 1fr 1fr;
+			margin-top: 50px;
+		}
+
+		.choose {
+			display: flex;
+			justify-content: center;
+			gap: 150px;
+		}
+
+		.play-game {
+			display: flex;
+			justify-content: center;
+		}
+
+		.main button {
+			height: 30px;
+			width: 100px;
+			border: 1px solid black;
+			border-radius: 2px;
+			background-color: #f5f5dc;
+			cursor: pointer;
+			transition: 0.4s;
+		}
+
+		.buttons h3 {
+			text-align: center;
+		}
+
+		.result {
+			margin-top: 30px;
+		}
+
+		.rock-b:hover, .paper-b:hover, .scissors-b:hover, .play-b:hover  {
+			opacity: 0.9;
+			background-color: white;
+			box-shadow: 1px 0px 3px rgba(0, 0, 0, 0.8);
+		}
+
+		.rock-b:active, .paper-b:active, .scissors-b:active, .play-b:active {
+			opacity: 0.4;
+			background-color: gray;
+			box-shadow: 1px 0px 3px rgba(0, 0, 0, 0.8);
+		}
+	</style>
 </head>
 <body>
+
+	<header class="header">
+		<h1>Rock Paper Scissors</h1>
+	</header>
+	<section class="score">
+		<div class="score-div">
+			<h2 id="playerScoreId"></h2>
+			<h2 id="computerScoreId"></h2>
+		</div>
+	</section>
+	<section class="main">
+		<div class="buttons">
+			<h3 id="h3">Make your choise.</h3>
+			<div class="choose">
+				<button id="rock-b" class="rock-b" onclick="onclickF('rock')">Rock</button>
+				<button id="paper-b" class="paper-b" onclick="onclickF('paper')">Paper</button>
+				<button id="scissors-b" class="scissors-b" onclick="onclickF('scissors')">Scissors</button>
+			</div>
+			<div class="play-game" onclick="playGame()">
+				<button class="play-b"">Play</button>
+				<p id="playerChoiseId"></p>
+			</div>
+			<h3 id="result" class="result"></h3>
+		</div>
+	</section>
+
 	<script>
-		function bigGame() {
-
-			let playerScore = 0;
-			let computerScore = 0;
-
-		for (i = 0; i < 5; i++) {
-
-			let playerChoise = prompt("Make your choise!")
-			playerChoise.toLowerCase;
-		function getPlayerChoise() {
-			if (playerChoise === 'rock') {
-				playerChoise = 'rock'
-			} else if (playerChoise === 'paper') {
-				playerChoise = 'paper'
-			} else if (playerChoise === 'scissors') {
-				playerChoise = 'scissors'
-			}
-			return playerChoise
-		}
 		
-		getPlayerChoise()
+		let playerChoise = 'None';
+		let computerChoise = 'None';
+		let playerScore = 0;
+		let computerScore = 0;
 
-		let computerChoise = Math.random() * 3
-		function getComputerChoise() {
-			if (computerChoise <= 1) {
+		function onclickF(value) {
+			playerChoise = value;
+			document.getElementById("h3").textContent = "Player choise: " + playerChoise;
+		}
+
+		function computerChoiseFunction() {
+			let computerNumber = Math.round(Math.random() * 2)
+
+			if (computerNumber === 0) {
 				computerChoise = 'rock'
-			} else if (computerChoise <= 2) {
+			} else if (computerNumber === 1) {
 				computerChoise = 'paper'
-			} else if (computerChoise <= 3) {
+			} else {
 				computerChoise = 'scissors'
 			}
 			return computerChoise
 		}
 
-		getComputerChoise()
+		console.log(computerChoiseFunction())
 
-		function playGame(playerChoise, computerChoise) {
-
-			if (playerChoise === 'rock' && computerChoise === 'paper' || playerChoise === 'paper' && computerChoise === 'scissors' || playerChoise === 'scissors' && computerChoise === 'rock') {
-			return computerScore ++ ||
-			console.log('You lose the round!')
-			} else if (playerChoise === 'rock' && computerChoise === 'rock' || playerChoise === 'paper' && computerChoise === 'paper' || playerChoise === 'scissors' && computerChoise === 'scissors') {
-			return computerScore + 0 ||
-			console.log('Round tie')
-			} else if (playerChoise === 'paper' && computerChoise === 'rock' || 	playerChoise === 'scissors' && computerChoise === 'paper' || playerChoise === 'rock' && computerChoise === 'scissors') {
-			return playerScore ++ ||
-			console.log('You win the round!')
-			}
+		function playGame() {
+			if (playerChoise === 'rock' && computerChoise === 'scissors' || playerChoise === 'scissors' && computerChoise === 'paper' || playerChoise === 'paper' && computerChoise === 'rock') {playerScore ++
+				document.getElementById("result").textContent = 'Player won.'
+			} else if (computerChoise === 'rock' && playerChoise === 'scissors' || computerChoise === 'scissors' && playerChoise === 'paper' || computerChoise === 'paper' && playerChoise === 'rock') {computerScore ++
+				document.getElementById("result").textContent = 'Computer won.'
+			} else {computerScore += 0
+				document.getElementById("result").textContent = 'Tie.'}
+			document.getElementById("playerScoreId").textContent = 'Player score: ' + playerScore;
+			document.getElementById("computerScoreId").textContent = 'Computer score: ' + computerScore;
 		}
-			playGame(playerChoise, computerChoise)
-		}
-		
-		if (playerScore < computerScore) {
-					console.log(`You lose! Computer score: ${computerScore}. Your score: ${playerScore}`)
-				} else if (playerScore > computerScore) {
-					console.log(`You Win! Computer score: ${computerScore}. Your score: ${playerScore}`)
-				} else if (playerScore === computerScore) {
-					console.log(`Tie! Computer score: ${computerScore}. Your score: ${playerScore}`)
-				}
-	}
-
-	bigGame()
-		//playGame(playerChoise, computerChoise)
 	</script>
 </body>
 </html>
